@@ -1,0 +1,87 @@
+Arguments: 
+  /Users/tongtong/.nvm/versions/node/v9.10.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js init
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tongtong/.nvm/versions/node/v9.10.0/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.10.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "webpcak4-vue",
+    "version": "1.0.0",
+    "description": "webpack4.0搭建vue开发环境",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "cross-env NODE_ENV=development webpack-dev-server --open --mode development --profile --progress",
+      "build": "cross-env NODE_ENV=production webpack --mode production --profile --progress"
+    },
+    "keywords": [],
+    "author": "tt",
+    "license": "ISC",
+    "devDependencies": {
+      "autoprefixer": "^8.6.5",
+      "babel-core": "^6.26.3",
+      "babel-loader": "^7.1.5",
+      "babel-plugin-transform-runtime": "^6.23.0",
+      "babel-polyfill": "^6.26.0",
+      "babel-preset-env": "^1.7.0",
+      "babel-preset-stage-0": "^6.24.1",
+      "babel-runtime": "^6.26.0",
+      "clean-webpack-plugin": "^0.1.19",
+      "cross-env": "^5.2.0",
+      "css-loader": "^0.28.11",
+      "file-loader": "^1.1.11",
+      "html-loader": "^0.5.5",
+      "html-webpack-plugin": "^3.2.0",
+      "image-webpack-loader": "^4.3.1",
+      "mini-css-extract-plugin": "^0.4.1",
+      "postcss-loader": "^2.1.6",
+      "poststylus": "^1.0.0",
+      "style-loader": "^0.21.0",
+      "stylus": "^0.54.5",
+      "stylus-loader": "^3.0.2",
+      "url-loader": "^1.0.1",
+      "vue-hot-reload-api": "^2.3.0",
+      "vue-html-loader": "^1.2.4",
+      "vue-loader": "^15.3.0",
+      "vue-style-loader": "^4.1.1",
+      "vue-template-compiler": "^2.5.17",
+      "webpack": "^4.16.5",
+      "webpack-cli": "^3.1.1",
+      "webpack-dev-server": "^3.1.5"
+    },
+    "dependencies": {
+      "axios": "^0.18.0",
+      "vue": "^2.5.17",
+      "vue-router": "^3.0.1",
+      "vuex": "^3.0.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:128791:13)
+      at Interface.emit (events.js:180:13)
+      at Interface._ttyWrite (readline.js:783:16)
+      at ReadStream.onkeypress (readline.js:163:10)
+      at ReadStream.emit (events.js:180:13)
+      at emitKeys (internal/readline.js:422:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1019:36)
+      at ReadStream.emit (events.js:180:13)
+      at addChunk (_stream_readable.js:274:12)
