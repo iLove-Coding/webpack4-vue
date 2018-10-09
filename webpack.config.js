@@ -1,18 +1,26 @@
-const isProd=process.env.NODE_ENV==='production';
-const MiniCssExtractPlugin=require('mini-css-extract-plugin'); // 文本分离插件，分离js和css
-const path=require('path');
+const isProd = process.env.NODE_ENV === 'production';
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 文本分离插件，分离js和css
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // 自动生成index.html
+const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理垃圾文件
+
+const VueLoaderPlugin = require('vue-loader/lib/plugin'); // vue加载器
+const PostStylus = require('poststylus'); // stylus加前缀
+
+const ApiMocker = require('webpack-api-mocker');
 /**
  *  css和stylus开发、生产依赖
  *  生产分离css
  */
-const cssConfig=[isProd?MiniCssExtractPlugin.loader:'vue-style-loader',{
+const cssConfig = [isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', {
         loader: 'css-loader',
         options: {
             minimize: isProd,
             sourceMap: !isProd
         }
     },'postcss-loader'];
-const stylusConfig=[isProd?MiniCssExtractPlugin.loader:'vue-style-loader',{
+const stylusConfig = [isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', {
         loader: 'css-loader',
         options: {
             minimize: isProd,
@@ -24,12 +32,18 @@ const stylusConfig=[isProd?MiniCssExtractPlugin.loader:'vue-style-loader',{
             sourceMap: !isProd
         }
     }];
-const webpack=require('webpack');
-const HtmlWebpackPlugin=require('html-webpack-plugin'); // 自动生成index.html
-const CleanWebpackPlugin=require('clean-webpack-plugin'); // 清理垃圾文件
-
-const VueLoaderPlugin = require('vue-loader/lib/plugin'); // vue加载器
-const PostStylus=require('poststylus'); // stylus加前缀
+const sassConfig = [isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', {
+        loader: 'css-loader',
+        options: {
+            minimize: isProd,
+            sourceMap: !isProd
+        }
+    },{
+        loader: 'sass-loader',
+        options: {
+            sourceMap: !isProd
+        }
+    }]
 
 module.exports = {
     entry: {
@@ -38,10 +52,10 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'), // 打包目录
-        filename: isProd?'javascript/[name].[hash:8].js':'[name].js', // [name] 是entry的key
-        publicPath: isProd?'./':'/'
+        filename: isProd ? 'javascript/[name].[hash:8].js':'[name].js', // [name] 是entry的key
+        publicPath: isProd ? './' : '/'
     },
-    devtool: isProd?false:'eval-source-map', // 如果只用source-map开发环境出现错误定位源文件，生产环境会生成map文件
+    devtool: isProd ? false : 'eval-source-map', // 如果只用source-map开发环境出现错误定位源文件，生产环境会生成map文件
     module: {
         rules: [
             {
@@ -53,13 +67,18 @@ module.exports = {
                 use: stylusConfig
             },
             {
+                test: /\.(scss|sass)$/,
+                use: sassConfig
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
                     hotReload: true, // 热重载
                     loaders:{
                         css: cssConfig,
-                        stylus: stylusConfig
+                        stylus: stylusConfig,
+                        sass: sassConfig
                     }
                 },
             },
@@ -113,15 +132,21 @@ module.exports = {
             }
         ]
     },
-    devServer:isProd?{}:{
+    devServer: isProd ? {}:{
         contentBase: path.join(__dirname, 'dist') // 将 dist 目录下的文件，作为可访问文件。
         ,compress: true // 开启Gzip压缩
         ,host: 'localhost' // 设置服务器的ip地址，默认localhost
         ,port: 3000 // 端口号
         ,open: true // 自动打开浏览器
+        ,before(app) {
+            ApiMocker(app, path.resolve('./mock/index.js'), {
+            // 'GET /api/users/list': 'http://localhost:3000',
+            // 'GET /api/userinfo/:id': 'http://localhost:3000',
+            })
+        }
     },
     resolve: {
-        extensions: ['.js', '.vue', '.styl'], // import引入文件的时候不用加后缀
+        extensions: ['.js', '.vue', '.styl', '.scss'], // import引入文件的时候不用加后缀
         modules: [ // 配置路径别名
             'node_modules'
             ,path.resolve(__dirname, 'src/components')
