@@ -17,13 +17,11 @@ webpack4搭建vue环境
 │   ├── index.html // 入口HTML文件模板）
 │   ├── main.js // 入口js文件
 │   ├── assets // 文件夹，用于存放图片、字体等资源文件，需要webpack处理
-│   │   ├── big-image.jpg
-│   │   └── small-image.jpg
 │   ├── components // 文件夹，用于存放公用组件
 │   │   └── HelloWorld.vue
 │   ├── views // 文件夹，用于存放页面级别的组件，每个page都有对应路由
 │   │   ├── demo.vue
-│   │   └── App.vue (根目录组件)
+│   │   └── App.vue 
 │   ├── router// 文件夹，用于存放路由配置
 │   │   └── index.js
 │   ├── store // 文件夹，用于存放vuex相关文件
